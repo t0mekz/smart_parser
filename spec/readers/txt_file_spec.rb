@@ -1,4 +1,4 @@
-require "./app/reader/txt_file"
+require "./app/readers/txt_file"
 
 RSpec.describe Reader::TxtFile do
   describe "#read" do

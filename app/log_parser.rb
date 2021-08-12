@@ -1,5 +1,9 @@
-require_relative "reader/txt_file"
-require_relative "models/web_log"
+# frozen_string_literal: true
+
+require_relative 'readers/txt_file'
+require_relative 'models/web_log'
+require_relative 'comparators/desc_views'
+require_relative 'comparators/desc_unique_views'
 
 class LogParser
   def initialize(file_path, reader: Reader::TxtFile)
@@ -8,16 +12,17 @@ class LogParser
     read_file
   end
 
-  def most_viewed
-    @collection.sort { |a, b| b.views <=> a.views }
+  def most_viewed(comparator: Comparator::DescViews)
+    @collection.sort { |a, b| comparator.compare(a, b) }
   end
 
-  def most_unique_views
+  def most_unique_views(comparator: Comparator::DescUniqueViews)
     @collection.each(&:refresh_unique_views_counter)
-                .sort { |a, b| b.unique_views <=> a.unique_views }
+               .sort { |a, b| comparator.compare(a, b) }
   end
 
   private
+
   attr_reader :reader
 
   def read_file

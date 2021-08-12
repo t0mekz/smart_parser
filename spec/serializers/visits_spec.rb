@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './app/serializer/visits'
+require './app/serializers/visits'
 
 RSpec.describe Serializer::Visits do
   context '#serialize' do

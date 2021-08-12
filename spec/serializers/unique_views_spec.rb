@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './app/serializer/unique_views'
+require './app/serializers/unique_views'
 
 RSpec.describe Serializer::UniqueViews do
   context '#serialize' do
