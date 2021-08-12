@@ -4,33 +4,31 @@ require_relative 'readers/txt_file'
 require_relative 'models/web_log'
 require_relative 'comparators/desc_views'
 require_relative 'comparators/desc_unique_views'
+require_relative 'repositories/web_log_repository'
 
 class LogParser
-  def initialize(file_path, reader: Reader::TxtFile)
-    @collection = []
+  def initialize(file_path, reader: Reader::TxtFile, repository: WebLogRepository.new)
+    @repository = repository
     @reader = reader.new(file_path)
     read_file
   end
 
   def most_viewed(comparator: Comparator::DescViews)
-    collection.sort { |a, b| comparator.compare(a, b) }
+    repository.all.sort { |a, b| comparator.compare(a, b) }
   end
 
   def most_unique_views(comparator: Comparator::DescUniqueViews)
-    collection.each(&:refresh_unique_views_counter)
+    repository.all.each(&:refresh_unique_views_counter)
               .sort { |a, b| comparator.compare(a, b) }
   end
 
   private
 
-  attr_reader :reader, :collection
+  attr_reader :reader, :repository
 
   def read_file
-    temp = {}
     reader.read do |path, ip|
-      temp[path] = WebLog.new(path) unless temp[path]
-      temp[path].add(ip)
+      repository.add(path, ip)
     end
-    @collection = temp.values
   end
 end
