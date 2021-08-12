@@ -1,7 +1,10 @@
+require_relative "reader/txt_file"
+
 class LogParser
-  def initialize(file_path)
+  def initialize(file_path, reader: Reader::TxtFile)
     @collection = {}
-    read_file(file_path)
+    @reader = reader.new(file_path)
+    read_file
   end
 
   def most_viewed
@@ -17,10 +20,10 @@ class LogParser
   end
 
   private
+  attr_reader :reader
 
-  def read_file(file_path)
-    File.foreach(file_path) do |line|
-      path, ip = line.chomp.split
+  def read_file
+    reader.read do |path, ip|
       ips = @collection[path] || []
       ips.push(ip)
       @collection[path] = ips
