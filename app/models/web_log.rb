@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WebLog
   def initialize(page, ips: [])
     @page = page

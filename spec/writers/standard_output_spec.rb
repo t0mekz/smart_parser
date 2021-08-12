@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require "./app/writers/standard_output"
+
+require './app/writers/standard_output'
 
 RSpec.describe Writer::StandardOutput do
   describe '#write' do

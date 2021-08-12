@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Serializer
   class Visits
     def initialize(weblog)
@@ -9,6 +11,7 @@ module Serializer
     end
 
     private
+
     attr_reader :weblog
   end
 end

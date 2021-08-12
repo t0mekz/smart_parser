@@ -14,6 +14,7 @@ module Reader
     end
 
     private
+
     attr_reader :filepath
   end
 end

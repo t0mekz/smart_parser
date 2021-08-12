@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Writer
   class StandardOutput
     def write(serialized_text)

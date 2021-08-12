@@ -13,17 +13,17 @@ class LogParser
   end
 
   def most_viewed(comparator: Comparator::DescViews)
-    @collection.sort { |a, b| comparator.compare(a, b) }
+    collection.sort { |a, b| comparator.compare(a, b) }
   end
 
   def most_unique_views(comparator: Comparator::DescUniqueViews)
-    @collection.each(&:refresh_unique_views_counter)
-               .sort { |a, b| comparator.compare(a, b) }
+    collection.each(&:refresh_unique_views_counter)
+              .sort { |a, b| comparator.compare(a, b) }
   end
 
   private
 
-  attr_reader :reader
+  attr_reader :reader, :collection
 
   def read_file
     temp = {}
